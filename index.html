@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SCT-Unit4</title>
+
+  <style>
+    /* THEME VARIABLES */
+    :root {
+      --bg:#ffffff; 
+      --text:#0b1220; 
+      --card:#f5f7fb; 
+      --muted:#556;
+      --accent:#0b5fff; 
+      --console-bg:#e9eef8; 
+      --console-text:#07203a;
+      --heading-bg:#eef5ff;
+      --pre-bg:#0b1220;
+      --pre-text:#eaf1ff;
+    }
+    
+    /* DARK MODE */
+    body.dark {
+      --bg:#071018; 
+      --text:#e6eef6; 
+      --card:#0b1220; 
+      --muted:#9aa6b2;
+      --accent:#58a6ff; 
+      --console-bg:#0b1220; 
+      --console-text:#dbeafe;
+      --heading-bg:#021022;
+      --pre-bg:#0f1a28;
+      --pre-text:#d9e6ff;
+    }
+
+    * { box-sizing: border-box }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .25s linear, color .25s linear;
+    }
+
+    .container { max-width: 980px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), #6ec1ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .controls { display: flex; gap: 8px; align-items: center; }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.25s ease;
+    }
+
+    .btn:hover { background-color: #0a3fc8; }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(0,0,0,0.06);
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    pre.code {
+      background: var(--pre-bg);
+      color: var(--pre-text);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      overflow-x: auto;
+      display: block;
+    }
+    th, td {
+      border: 1px solid #9993;
+      padding: 8px;
+    }
+
+    /* MOBILE RESPONSIVENESS */
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+        font-size: 15px;
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .container {
+        width: 100%;
+        padding: 0;
+      }
+
+      pre.code {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">SB</div>
+        <h1>Spring Notes — 1(theory),4,5</h1>
+      </div>
+
+      <div class="controls">
+        <button id="toggleTheme" class="btn ghost">Toggle Theme</button>
+      </div>
+    </header>
+
+
+    <main>
+<section class="card" id="risks">
+      <h2>1. Common Software Risks (C / C++)</h2>
+      <p class="muted">C and C++ allow direct memory access and pointer arithmetic. This power creates specific categories of risk — important for exam answers.</p>
+
+      <table>
+        <thead>
+          <tr><th>Risk</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Buffer Overflow</strong></td>
+            <td>Writing past allocated memory. Attackers exploit this to corrupt control flow, crash programs, or execute arbitrary code.</td>
+          </tr>
+          <tr>
+            <td><strong>Memory Leaks</strong></td>
+            <td>Failing to free memory (e.g., missing <code>free()</code> or <code>delete</code>) leads to resource exhaustion and degraded availability.</td>
+          </tr>
+          <tr>
+            <td><strong>Dangling Pointers</strong></td>
+            <td>Accessing memory after it has been freed causes undefined, unpredictable behavior and possible security holes.</td>
+          </tr>
+          <tr>
+            <td><strong>Type Safety Issues</strong></td>
+            <td>Weak compile-time checks or unsafe casts let attackers manipulate data representation or bypass invariants.</td>
+          </tr>
+          <tr>
+            <td><strong>Undefined Behavior</strong></td>
+            <td>Uninitialized variables, out-of-bounds indexing, or invalid pointer dereferences yield nondeterministic faults and exploitable states.</td>
+          </tr>
+          <tr>
+            <td><strong>Poor Error Handling</strong></td>
+            <td>Ignoring return values or errors can let faults propagate, provide inconsistent state, or reveal sensitive info.</td>
+          </tr>
+          <tr>
+            <td><strong>Input Validation Failures</strong></td>
+            <td>Unsanitized user or network input may allow injection, format-string vulnerabilities, crashes or logic misuse.</td>
+          </tr>
+          <tr>
+            <td><strong>Race Conditions</strong></td>
+            <td>Unsafe concurrent access to shared state can produce security-critical logic errors and privilege escalation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Low-level design -->
+    <section class="card" id="low-level">
+      <h2>2. Importance of Low-Level Design Inspections (Expanded)</h2>
+      <p>Low-level inspections examine concrete design decisions (memory layout, allocation strategy, pointer ownership, APIs). Finding issues at design saves time and cost compared to fixing them after implementation or deployment.</p>
+
+      <h3>Why they matter</h3>
+      <ul>
+        <li>Detects buffer-overflow and memory-management issues before coding.</li>
+        <li>Ensures data structures and pointer ownership models are secure and explicit.</li>
+        <li>Exposes use of unsafe functions and libraries early (e.g., <code>gets()</code>, <code>strcpy()</code>).</li>
+      </ul>
+
+      <h3>Key steps in a low-level design review</h3>
+      <div class="two-col">
+        <div>
+          <strong>Check memory handling strategy</strong>
+          <p class="muted">Decide ownership model (unique/shared/borrowed), use of smart pointers, and lifetime rules.</p>
+        </div>
+        <div>
+          <strong>Review control logic</strong>
+          <p class="muted">Look for infinite loops, recursion depth, error propagation paths and concurrency hazards.</p>
+        </div>
+        <div>
+          <strong>Validate input-processing pipelines</strong>
+          <p class="muted">Define sanitization, canonicalization, and boundary checks at module boundaries.</p>
+        </div>
+        <div>
+          <strong>Verify library/tool selection</strong>
+          <p class="muted">Prohibit unsafe APIs; prefer vetted libraries with secure defaults.</p>
+        </div>
+      </div>
+
+      <p class="ref">Note: Low-level inspection is an early SDLC activity and aligns with secure SDLC practices (CSSLP / OWASP). :contentReference[oaicite:0]{index=0}</p>
+    </section>
+
+    <!-- Best practices -->
+    <section class="card" id="best-practices">
+      <h2>3. Best Practices for Writing Secure C/C++ Code (Expanded)</h2>
+      <p>Secure coding is a set of habits and tool-assisted checks — essential for languages that allow manual memory manipulation.</p>
+
+      <h3>Practical checklist</h3>
+      <ol>
+        <li><strong>Safe string &amp; memory handling</strong>
+          <ul>
+            <li>Use <code>strncpy()</code>, <code>fgets()</code>, or safe-platform APIs such as <code>memcpy_s()</code>.</li>
+            <li>Prefer <code>std::string</code> and <code>std::vector</code> over raw buffers where possible.</li>
+            <li>Adopt RAII and smart pointers: <code>std::unique_ptr</code>, <code>std::shared_ptr</code>.</li>
+          </ul>
+        </li>
+
+        <li><strong>Strong input validation</strong>
+          <p class="muted">Validate length, types, character encoding, numeric range and reject unexpected formats early.</p>
+        </li>
+
+        <li><strong>Avoid hard-coded secrets</strong>
+          <p class="muted">Use configuration files/environment variables and secure secret stores; never embed keys in source.</p>
+        </li>
+
+        <li><strong>Defensive error handling</strong>
+          <p class="muted">Check return values, propagate errors safely, and provide meaningful logs without leaking secrets.</p>
+        </li>
+
+        <li><strong>Compiler security flags</strong>
+          <p class="muted">Use: <code>-Wall -Wextra -Werror -fstack-protector -D_FORTIFY_SOURCE=2</code> and enable ASLR/DEP at OS level.</p>
+        </li>
+
+        <li><strong>Modular design</strong>
+          <p class="muted">Small, coherent modules are easier to test and review; enforce single-responsibility principle.</p>
+        </li>
+
+        <li><strong>Automated tooling</strong>
+          <p class="muted">Static analysis (Clang Static Analyzer, SonarQube), dynamic analysis (Valgrind), and fuzz testing expose hard-to-see bugs.</p>
+        </li>
+      </ol>
+
+      <p class="muted"><strong>Exam tip:</strong> When answering, list specific functions to avoid (e.g., <code>gets()</code>) and show a compiler flag or tool to demonstrate practical understanding.</p>
+    </section>
+
+    <!-- Defensive coding -->
+    <section class="card" id="defensive">
+      <h2>4. Defensive Coding in C++ (Expanded)</h2>
+      <p>Defensive coding views every external input and system call as potentially hostile — write code to handle those cases safely.</p>
+
+      <h3>Core defensive techniques</h3>
+      <table>
+        <thead><tr><th>Practice</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Input validation at entry</td><td>Block malformed or malicious data before it reaches core logic.</td></tr>
+          <tr><td>Assertions &amp; pre-conditions</td><td>Stop execution when critical invariants are violated (use <code>assert()</code> for developer checks).</td></tr>
+          <tr><td>Graceful error recovery</td><td>Prevent crashes; roll back or sanitize state after errors.</td></tr>
+          <tr><td>Readable code</td><td>Easier to audit, review and maintain secure invariants.</td></tr>
+          <tr><td>Test early &amp; often</td><td>Unit tests, CI checks and regression tests catch issues quickly.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Examples (brief)</h3>
+      <p class="muted">Use a small pre-check function before sensitive operations (e.g., pre-validate a file handle or pointer) and assert only on developer-visible invariants, not runtime user errors.</p>
+    </section>
+
+    <!-- Clean code -->
+    <section class="card" id="clean-code">
+      <h2>5. Clean Code Principles to Prevent Vulnerabilities (Expanded)</h2>
+      <p>Clean code reduces mistakes that create security vulnerabilities and makes audits and reviews far more effective.</p>
+
+      <h3>How clean code helps security</h3>
+      <ul>
+        <li>Reduces accidental logic mistakes</li>
+        <li>Makes security reviews faster and more accurate</li>
+        <li>Removes dead code and reduces attack surface</li>
+        <li>Improves testability so bugs are caught earlier</li>
+      </ul>
+
+      <h3>Key components</h3>
+      <table>
+        <thead><tr><th>Principle</th><th>Meaning / Benefit</th></tr></thead>
+        <tbody>
+          <tr><td>Meaningful naming</td><td>Function &amp; variable names express intent (e.g., <code>validatePassword()</code>).</td></tr>
+          <tr><td>Consistent formatting</td><td>Spot nested logic and misplaced braces quickly.</td></tr>
+          <tr><td>DRY (Don't repeat)</td><td>Avoid duplicate code and duplicated bugs.</td></tr>
+          <tr><td>Comment <em>why</em>, not <em>what</em></td><td>Explains intent for future auditors; reduces misinterpretation.</td></tr>
+          <tr><td>Small functions</td><td>Each function has a single responsibility — easier to test and verify.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Preventative planning -->
+    <section class="card" id="preventative">
+      <h2>6. Preventative Planning (Expanded)</h2>
+      <p>Integrate security from the start: plan, model threats, prototype, and iterate.</p>
+
+      <h3>Key activities</h3>
+      <ol>
+        <li><strong>Threat Modeling</strong> — identify attack vectors (memory corruption, injection, DoS) and prioritize mitigations.</li>
+        <li><strong>Iterative Design</strong> — produce prototypes &amp; gather stakeholder feedback; repeat to harden design.</li>
+        <li><strong>Secure Library Selection</strong> — select vetted components and avoid known-vulnerable APIs.</li>
+        <li><strong>Prototype</strong> — validate usability and security assumptions before full implementation.</li>
+        <li><strong>Security Requirements</strong> — document validation rules, auth, cryptography and acceptable failure modes.</li>
+        <li><strong>Structured Test Plan</strong> — unit tests, fuzz tests, boundary tests, stress tests and static analysis integrated into CI.</li>
+      </ol>
+
+      <p class="muted"><strong>Exam tip:</strong> Write a short threat model bullet list for a given module (e.g., file parser) and show 2 mitigations — that earns marks quickly.</p>
+    </section>
+</div>
+</body>
+<body>
+<div class="container">
+
+    <section class="card" aria-labelledby="serialization">
+        <h2 id="serialization">Serialization & Deserialization (Java)</h2>
+
+        <p><strong>Serialization:</strong> Converting an object into a byte stream to store or transmit.</p>
+        <p><strong>Deserialization:</strong> Reconstructing the object from the byte stream.</p>
+
+        <h3>Why Security Matters</h3>
+        <ul>
+            <li>Object tampering</li>
+            <li>Unauthorized access</li>
+            <li>Remote Code Execution (RCE)</li>
+            <li>Denial of Service (DoS)</li>
+        </ul>
+
+        <h3>Security Measures in Java</h3>
+        <ul>
+            <li><strong>Never Deserialize Untrusted Input:</strong> Only accept objects from trusted sources.</li>
+            <li><strong>Use <code>serialVersionUID</code>:</strong> Ensures version compatibility of classes.</li>
+            <li><strong>Mark Sensitive Fields as <code>transient</code>:</strong> Prevents passwords, tokens, and keys from being serialized.</li>
+            <li><strong>Validate in <code>readObject()</code>:</strong> Sanitize and verify object data before use.</li>
+            <li><strong>Use Object Filters (Java 9+):</strong> Restrict deserialization to allowed classes.</li>
+        </ul>
+
+        <h3>Syntax Example</h3>
+        <pre>&lt;?java
+import java.io.*;
+
+class Student implements Serializable {
+    String name;
+    transient String password; // sensitive field not serialized
+}
+        </pre>
+
+        <h3>Usage Example</h3>
+        <pre>&lt;?java
+Student s = new Student();
+s.name = "Adithya";
+s.password = "secret";
+
+// Serialize
+ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.ser"));
+out.writeObject(s);
+out.close();
+
+// Deserialize
+ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.ser"));
+Student obj = (Student) in.readObject();
+in.close();
+        </pre>
+
+        <h3>Serialization vs Externalization</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Serialization</th>
+                    <th>Externalization</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Limited control (automatic; most fields handled automatically)</td>
+                    <td>Full manual control (you decide which fields to write/read)</td>
+                </tr>
+                <tr>
+                    <td>Slower (built-in serialization adds overhead)</td>
+                    <td>Faster (only explicitly written fields are processed)</td>
+                </tr>
+                <tr>
+                    <td>Uses <code>Serializable</code> interface</td>
+                    <td>Uses <code>Externalizable</code> interface</td>
+                </tr>
+                <tr>
+                    <td>Optional custom methods (<code>writeObject</code> / <code>readObject</code>)</td>
+                    <td>Required custom methods (<code>writeExternal</code> / <code>readExternal</code>)</td>
+                </tr>
+                <tr>
+                    <td>All non-transient fields are serialized by default</td>
+                    <td>Only explicitly written fields are serialized</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+</div>
+</body>
+<body>
+<div class="container">
+
+    <section class="card" aria-labelledby="securing-objects">
+        <h2 id="securing-objects">Securing Objects (C/C++ & Java)</h2>
+
+        <!-- C/C++ Section -->
+        <section aria-labelledby="cpp-objects">
+            <h3 id="cpp-objects">1. Securing Objects in C/C++</h3>
+            <ul>
+                <li><strong>Access Control:</strong> Use <code>private</code>, <code>protected</code>, and <code>public</code> members to restrict access.</li>
+                <li><strong>Memory Management:</strong> Avoid memory leaks and dangling pointers using proper allocation (<code>new</code>) and deallocation (<code>delete</code>).</li>
+                <li><strong>Data Hiding:</strong> Encapsulate object data using getters/setters to prevent unauthorized modification.</li>
+                <li><strong>RAII (Resource Acquisition Is Initialization):</strong> Constructors allocate, destructors release resources automatically.</li>
+                <li><strong>Const-correctness:</strong> Use <code>const</code> for variables or parameters to prevent accidental modification.</li>
+            </ul>
+
+            <h4>Simple C++ Example</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+private:
+    string name;   // hidden from outside
+public:
+    void setName(string n) { name = n; }
+    string getName() { return name; }
+};
+
+int main() {
+    Student s;
+    s.setName("Adithya");
+    cout &lt;&lt; s.getName();
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Java Section -->
+        <section aria-labelledby="java-accessibility">
+            <h3 id="java-accessibility">2. Accessibility vs Extensibility in Java</h3>
+            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                <thead>
+                    <tr style="background-color:#e9ecef;">
+                        <th style="padding:8px; border:1px solid #dee2e6;">Aspect</th>
+                        <th style="padding:8px; border:1px solid #dee2e6;">Accessibility</th>
+                        <th style="padding:8px; border:1px solid #dee2e6;">Extensibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Definition</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Ability to access class members (public/private/protected/default)</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Ability to extend or modify existing classes without breaking functionality</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Example</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">private int x; public int getX();</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Using <code>extends</code> keyword or implementing interfaces</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Purpose</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Protect data & restrict unauthorized access</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Allow code reuse and feature extension</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Controlled by</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Access modifiers</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Design patterns, inheritance, interfaces</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- C++ Data Visibility -->
+        <section aria-labelledby="cpp-visibility">
+            <h3 id="cpp-visibility">3. Data Visibility in C++</h3>
+            <ul>
+                <li><strong>Private:</strong> Visible only inside the class.</li>
+                <li><strong>Protected:</strong> Visible in the class and derived classes.</li>
+                <li><strong>Public:</strong> Visible everywhere.</li>
+                <li><strong>Friend Functions / Classes:</strong> Can access private/protected members.</li>
+                <li><strong>Const Qualifiers:</strong> Control visibility of modification.</li>
+            </ul>
+
+            <h4>Quick C++ Example</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+class Example {
+private:
+    int secret = 42;
+public:
+    int visible = 10;
+};
+
+int main() {
+    Example e;
+    cout &lt;&lt; e.visible; // OK
+    // cout &lt;&lt; e.secret; // Error
+}
+            </pre>
+        </section>
+
+    </section>
+
+</div>
+</body>
+<body>
+<div class="container">
+
+    <section class="card" aria-labelledby="assertions">
+        <h2 id="assertions">Assertions & Conditions</h2>
+
+        <!-- What are Assertions -->
+        <section aria-labelledby="what-assertions">
+            <h3 id="what-assertions">1. What are Assertions?</h3>
+            <ul>
+                <li>Assertions are statements that check assumptions made by the programmer at runtime.</li>
+                <li>Used to detect programming errors and maintain code reliability and security.</li>
+                <li>Do not replace normal error handling; act as sanity checks during development.</li>
+            </ul>
+        </section>
+
+        <!-- Use in Secure Coding (C/C++) -->
+        <section aria-labelledby="secure-coding-cpp">
+            <h3 id="secure-coding-cpp">2. Use in Secure Coding (C/C++)</h3>
+            <ul>
+                <li>Detect logical errors early: stops execution when assumptions fail.</li>
+                <li>Prevent invalid state propagation: avoids security vulnerabilities from inconsistent data.</li>
+                <li>Document assumptions: makes code self-checking and easier to audit.</li>
+                <li>Prevents undefined behavior: ensures function inputs/outputs meet expected conditions.</li>
+            </ul>
+
+            <h4>Simple C++ Example</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+using namespace std;
+
+int main() {
+    int x = 5;
+    assert(x &gt; 0); // Checks that x is positive
+    cout &lt;&lt; "x is positive: " &lt;&lt; x;
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Assertions in Java -->
+        <section aria-labelledby="assertions-java">
+            <h3 id="assertions-java">3. Assertions in Java</h3>
+            <ul>
+                <li>Java supports <code>assert</code> statements since JDK 1.4.</li>
+                <li>Used to validate assumptions during development and testing.</li>
+                <li>Disabled by default at runtime unless enabled with <code>-ea</code> flag.</li>
+            </ul>
+
+            <h4>Simple Java Example</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+public class Main {
+    public static void main(String[] args) {
+        int x = 5;
+        assert x &gt; 0; // Checks x is positive
+        System.out.println("x is positive: " + x);
+    }
+}
+            </pre>
+        </section>
+
+        <!-- Pre- and Post-Conditions -->
+        <section aria-labelledby="pre-post-conditions">
+            <h3 id="pre-post-conditions">4. Pre- and Post-Conditions</h3>
+            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                <thead>
+                    <tr style="background-color:#e9ecef;">
+                        <th style="padding:8px; border:1px solid #dee2e6;">Term</th>
+                        <th style="padding:8px; border:1px solid #dee2e6;">Meaning</th>
+                        <th style="padding:8px; border:1px solid #dee2e6;">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Pre-condition</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Must be true before execution</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">assert x &gt; 0; before calculation</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Post-condition</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">Must be true after execution</td>
+                        <td style="padding:8px; border:1px solid #dee2e6;">assert result &gt;= 0; after calculation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Key Points</h4>
+            <ul>
+                <li>Pre-condition: Checks inputs or environment before execution.</li>
+                <li>Post-condition: Validates outputs or state after execution.</li>
+                <li>Helps ensure correct behavior and prevent vulnerabilities.</li>
+            </ul>
+        </section>
+
+    </section>
+
+</div>
+</body>
+<body>
+<div class="container">
+
+    <section class="card" aria-labelledby="defensive-coding">
+        <h2 id="defensive-coding">Defensive & Preventative Coding</h2>
+
+        <!-- Defensive Coding in C/C++ -->
+        <section aria-labelledby="defensive-coding-cpp">
+            <h3 id="defensive-coding-cpp">1. Defensive Coding in C/C++</h3>
+            <p><strong>Definition:</strong> Defensive coding is a programming approach that anticipates potential errors or unexpected inputs and ensures the program behaves safely under all conditions.</p>
+
+            <p><strong>Purpose:</strong></p>
+            <ul>
+                <li>Prevents security vulnerabilities caused by invalid inputs, memory issues, or unexpected behavior.</li>
+                <li>Ensures robust and reliable software.</li>
+                <li>Makes maintenance easier and reduces risk of crashes or undefined behavior.</li>
+            </ul>
+
+            <p><strong>Techniques:</strong></p>
+            <ul>
+                <li><strong>Input Validation:</strong> Always check inputs before processing.</li>
+                <li><strong>Error Handling:</strong> Use proper exception handling or return codes.</li>
+                <li><strong>Boundary Checks:</strong> Ensure array indices, buffer sizes, and loops are safe.</li>
+                <li><strong>Memory Safety:</strong> Use safe allocation and deallocation practices.</li>
+                <li><strong>Fail-Safe Defaults:</strong> In case of unexpected input, default to a safe state.</li>
+            </ul>
+
+            <h4>Example (C++ Defensive Input Check)</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int age;
+    cout &lt;&lt; "Enter your age: ";
+    cin &gt;&gt; age;
+    if(age &lt; 0 || age &gt; 120) {
+        cout &lt;&lt; "Invalid age!" &lt;&lt; endl; // Defensive check
+        return 1;
+    }
+    cout &lt;&lt; "Age is " &lt;&lt; age &lt;&lt; endl;
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Iterative Design Principles -->
+        <section aria-labelledby="iterative-design">
+            <h3 id="iterative-design">2. Iterative Design Principles for Secure Coding</h3>
+            <ul>
+                <li><strong>Iterative Development:</strong> Break the software into smaller modules and refine them in cycles.</li>
+                <li><strong>Secure by Design:</strong> Each iteration includes security review, testing, and validation.</li>
+                <li><strong>Benefits:</strong> Early detection of vulnerabilities, easier debugging, and improved reliability.</li>
+            </ul>
+        </section>
+
+        <!-- Preventative Planning -->
+        <section aria-labelledby="preventative-planning">
+            <h3 id="preventative-planning">3. Preventative Planning in Software Development</h3>
+            <p><strong>Definition:</strong> Proactive planning to anticipate potential failures, attacks, or errors before coding begins.</p>
+            <p><strong>Purpose:</strong> Reduces security risks, maintenance costs, and system failures.</p>
+            <p><strong>Key Steps:</strong></p>
+            <ul>
+                <li>Threat modeling to identify possible attack vectors.</li>
+                <li>Input validation strategies defined early.</li>
+                <li>Code review guidelines and secure coding standards.</li>
+                <li>Design redundancy and error handling mechanisms.</li>
+                <li>Documentation and testing plan included in initial design.</li>
+            </ul>
+        </section>
+
+    </section>
+
+</div>
+</body>
+<body>
+<div class="container">
+
+    <section class="card" aria-labelledby="oop-cpp">
+        <h2 id="oop-cpp">OOP Concepts (C++ Special Topic)</h2>
+
+        <!-- Object Slicing -->
+        <section aria-labelledby="object-slicing">
+            <h3 id="object-slicing">1. Object Slicing</h3>
+            <p><strong>Definition:</strong> Object slicing occurs when a derived class object is assigned to a base class object, losing the derived part of the object.</p>
+            <p><strong>Problem:</strong> Data members and methods specific to the derived class are “sliced off”.</p>
+            <p><strong>Solution:</strong> Use pointers or references to avoid slicing.</p>
+
+            <h4>Example:</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+using namespace std;
+
+class Base { public: int a; };
+class Derived : public Base { public: int b; };
+
+int main() {
+    Derived d;
+    d.a = 1; d.b = 2;
+
+    Base b = d; // Object slicing: b only has 'a'
+    cout &lt;&lt; "b.a = " &lt;&lt; b.a &lt;&lt; endl;
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Overriding Virtual Functions -->
+        <section aria-labelledby="virtual-functions">
+            <h3 id="virtual-functions">2. Overriding Virtual Functions</h3>
+            <p><strong>Definition:</strong> A derived class provides a specific implementation of a base class function marked as <code>virtual</code>.</p>
+            <p><strong>Purpose:</strong> Achieves runtime polymorphism.</p>
+
+            <h4>Example:</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+using namespace std;
+
+class Base { public: virtual void show() { cout &lt;&lt; "Base class\n"; } };
+class Derived : public Base { public: void show() override { cout &lt;&lt; "Derived class\n"; } };
+
+int main() {
+    Base* b = new Derived();
+    b-&gt;show(); // Calls Derived::show()
+    delete b;
+    return 0;
+}
+            </pre>
+        </section>
+
+        <!-- Constructor Overloading -->
+        <section aria-labelledby="constructor-overloading">
+            <h3 id="constructor-overloading">3. Constructor Overloading</h3>
+            <p><strong>Definition:</strong> Multiple constructors in a class with different parameter lists.</p>
+            <p><strong>Purpose:</strong> Allows objects to be initialized in different ways.</p>
+
+            <h4>Example:</h4>
+            <pre style="background-color:#f4f4f4; padding:10px; border-radius:5px; overflow-x:auto;">
+#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    Student() { name="Unknown"; }
+    Student(string n) { name=n; }
+    void show() { cout &lt;&lt; name &lt;&lt; endl; }
+};
+
+int main() {
+    Student s1; s1.show();       // Unknown
+    Student s2("Adithya"); s2.show(); // Adithya
+    return 0;
+}
+            </pre>
+        </section>
+
+    </section>
+
+</div>
+</body>
+<script>
+  // theme persistence and toggle
+  const body = document.body;
+  const toggle = document.getElementById('toggleTheme');
+
+  // load saved theme
+  if (localStorage.getItem('spring-theme') === 'dark') {
+    body.classList.add('dark');
+  }
+
+  // toggle theme
+  toggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem(
+      'spring-theme',
+      body.classList.contains('dark') ? 'dark' : 'light'
+    );
+  });
+</script>
+</html>
